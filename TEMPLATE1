@@ -1,0 +1,23 @@
+CREATE NONCLUSTERED  INDEX IX_TENDER_03 ON [DBBM].[dbo].[Tenders] (ModifiedDate) 
+CARMEL
+SELECT TOP 1000000
+ROW_NUMBER() OVER (PARTITION BY TENDERYEAR ORDER BY TENDERYEAR)[#]
+, [Id]
+      ,[TenderNumber]
+      ,  Format( [TenderYear],'#,###.###')[TenderYear]
+	  ,[TenderYear]
+      ,[Name]     
+      ,[TenderDocURL]
+  FROM [DBBM].[dbo].[Tenders] WITH (NOLOCK)
+WHERE DATEDIFF(DD,ModifiedDate,GETDATE()) < 365
+UNION ALL
+SELECT TOP 1000000
+ROW_NUMBER() OVER (PARTITION BY TENDERYEAR ORDER BY TENDERYEAR)[#]
+, [Id]
+      ,[TenderNumber]
+      ,  Format( [TenderYear],'#,###.###')[TenderYear]
+	  ,[TenderYear]
+      ,[Name]     
+      ,[TenderDocURL]
+  FROM [DBBM].[dbo].[Tenders] WITH (NOLOCK)
+WHERE DATEDIFF(DD,ModifiedDate,GETDATE()) >= 365
