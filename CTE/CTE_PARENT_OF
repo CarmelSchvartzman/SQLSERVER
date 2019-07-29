@@ -1,0 +1,41 @@
+--  COMMON TABLE EXPRESSION RECURSIVE
+
+/*
+create table #PARENTOF(parent text, child text);
+
+insert into #PARENTOF values ('Alice', 'Carol');
+insert into #PARENTOF values ('Bob', 'Carol');
+insert into #PARENTOF values ('Carol', 'Dave');
+insert into #PARENTOF values ('Carol', 'George');
+insert into #PARENTOF values ('Dave', 'Mary');
+insert into #PARENTOF values ('Eve', 'Mary');
+insert into #PARENTOF values ('Mary', 'Frank');
+*/
+
+SELECT PARENT , CHILD
+FROM #PARENTOF ; 
+
+
+
+WITH ANCESTOR(PARENT , CHILD ) AS
+(
+SELECT PARENT , CHILD
+FROM #PARENTOF  
+
+
+UNION ALL
+
+SELECT          ANCESTOR.PARENT , #PARENTOF.CHILD
+FROM #PARENTOF
+INNER JOIN ANCESTOR 
+ON ANCESTOR.CHILD    LIKE  #PARENTOF.PARENT
+)
+
+
+
+SELECT PARENT,CHILD FROM ANCESTOR   
+WHERE
+CHILD LIKE 'FRANK'
+OPTION(MAXRECURSION 3)
+
+ 
