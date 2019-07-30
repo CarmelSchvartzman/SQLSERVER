@@ -1,0 +1,12 @@
+CREATE FUNCTION fnGetShortDate(@DATE DATETIME) RETURNS NVARCHAR(20)
+AS
+BEGIN
+
+DECLARE @RET  NVARCHAR(20)
+select @RET = FORMAT( @DATE, 'MM/yyyy' )  
+
+RETURN @RET
+
+END
+
+--- SELECT  dbo.fnGetShortDate(   GETDATE() )    ----  07/2019    <<<<<<<<<<<<<<<<
