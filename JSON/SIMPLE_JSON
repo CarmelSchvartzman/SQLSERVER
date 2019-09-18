@@ -1,3 +1,5 @@
+////////  https://www.youtube.com/watch?v=0Zm41iZzbnI
+
 SELECT DISTINCT JSON_VALUE([JSON],'$.MEMBERID') [JSON],* 
 FROM HISTORY
 CROSS APPLY OPENJSON([JSON],'$.FRIENDS')
