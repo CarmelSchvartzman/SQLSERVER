@@ -1,0 +1,20 @@
+SELECT DISTINCT JSON_VALUE([JSON],'$.MEMBERID') [JSON],* 
+FROM HISTORY
+CROSS APPLY OPENJSON([JSON],'$.FRIENDS')
+WITH (
+    ID INT '$.ID',
+	NAME NVARCHAR(50) '$.NAME'
+
+) AS MEMBERS
+
+WHERE ISJSON([JSON]) > 0
+
+	
+  
+  
+  
+ 
+23	18	35	 	67	4294967.00	{"ID":23,"IdNum":56,"AssetID":777,"ComputedRent":4294967,"Friends":[{"id":0, "name":"Art"},{"id":1, "name":"Ben"}]}	
+23	18	35	 	67	4294967.00	{"ID":23,"IdNum":56,"AssetID":777,"ComputedRent":4294967,"Friends":[{"id":0, "name":"Art"},{"id":1, "name":"Ben"}]}	
+23	19	35	 	67	4294967.00	{"ID":23,"IdNum":56,"AssetID":777,"ComputedRent":4294967,"Friends":[{"id":0, "name":"Art"},{"id":1, "name":"Ben"}]}	
+23	19	35	 	67	4294967.00	{"ID":23,"IdNum":56,"AssetID":777,"ComputedRent":4294967,"Friends":[{"id":0, "name":"Art"},{"id":1, "name":"Ben"}]}	
