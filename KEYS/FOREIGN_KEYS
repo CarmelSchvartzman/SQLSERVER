@@ -1,0 +1,13 @@
+Create table tblQuestionOptions
+(
+    Id int primary key,
+    OptionText nvarchar(100),
+    QuestionId int foreign key references tblQuestions(Id)
+)
+Go
+
+Insert into tblQuestionOptions values (1, 'USA', 1)
+Insert into tblQuestionOptions values (2, 'India', 1)
+Insert into tblQuestionOptions values (3, 'UK', 1)
+Insert into tblQuestionOptions values (4, 'Australia', 1)
+Go
