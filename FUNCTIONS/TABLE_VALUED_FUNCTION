@@ -26,3 +26,21 @@ End
 RETURN
 END
       
+///////////  USAGE :   ////////////////////////////////////////////////////////////////
+
+DECLARE @TABLE_1 TABLE 
+(
+	ID		int,
+	IncomeTypeID	tinyint,
+	TypeID	tinyint,
+	AvgIncome		int,
+	AvgWorkHours	int,
+    GenderID		tinyint
+)
+
+
+
+
+
+insert into @TABLE_1 
+	SELECT * FROM [dbo].[MyTableValuedFunction] (@ID,  2 ,@IsQuestion)  
