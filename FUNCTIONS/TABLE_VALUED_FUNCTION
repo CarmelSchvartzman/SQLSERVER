@@ -1,0 +1,28 @@
+CREATE FUNCTION  [dbo].[MyTableValuedFunction](@ID int ,@Type tinyint,@IsQuestion bit)
+RETURNS @Incomes TABLE 
+(
+	ID		int,
+	IncomeTypeID	tinyint,
+	TypeID	tinyint,
+	AvgIncome		int,
+	AvgWorkHours	int,
+	GenderID		tinyint	
+)
+AS 
+BEGIN
+
+Begin
+	if exists (select 1 from tbl where 
+			ID = @ID and  year(EffectiveDate) = 1951)
+		Set @IsQuestion = 0 
+	else
+		Set @IsQuestion = 1 
+End
+ 
+	If (@IsQuestion=1)
+		Insert into @Incomes
+			Select ....   
+
+RETURN
+END
+      
