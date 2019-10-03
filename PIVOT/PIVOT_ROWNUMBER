@@ -1,0 +1,48 @@
+SELECT * FROM
+(
+SELECT
+Blogger.Name [Name],
+dbo.Blog.Title [Title],
+
+--dbo.Blog.DatePosted [DatePosted],
+dbo.Blog.MainPicture [MainPicture],
+dbo.Blog.BloggerID [BloggerID]
+FROM dbo.Blog
+JOIN
+dbo.Blogger
+ON dbo.Blog.BloggerID = dbo.Blogger.BloggerID
+LEFT JOIN
+dbo.Comment
+ON dbo.Blog.BlogID = dbo.Comment.BlogID
+
+) DATUM
+PIVOT
+(
+MAX(Name)
+FOR [BloggerID] IN ([1],[2],[3])
+)
+PIVOT_TBL
+
+
+///////////////  DATUM :
+
+BlogID	Title	MainPicture	                          BloggerID
+9	Orchid Phalaenopsis	Phalaenopsis_amboinensis.jpg	1
+10	Paphiopedilum 	Paphiopedilum_concolor.jpg	    1
+11	Calypso 	Orchid Calypso.JPG                  	1
+12	ZBulbophyllum minutissimum	Bulbophyllum.jpg	  2
+13	Sobralia altissima	Sobralia.jpg	3
+14	Cattleya trianae	Cattleya.jpg	3
+15	Orchid Phalaenopsis	Phalaenopsis_amboinensis.jpg	3
+16	Paphiopedilum 	Paphiopedilum_concolor.jpg	2
+17	Paphiopedilum 	Paphiopedilum_concolor.jpg	1
+
+////////////// RESULTS :
+
+Title	MainPicture                               	1   	2       	3
+ZBulbophyllum minutissimum	Bulbophyllum.jpg	    NULL	Blogger2	NULL
+Cattleya trianae	Cattleya.jpg	                  NULL	NULL	BLOGGER3
+Calypso 	Orchid Calypso.JPG	                    Blogger1	NULL	NULL
+Paphiopedilum 	Paphiopedilum_concolor.jpg	      Blogger1	Blogger2	NULL
+Orchid Phalaenopsis	Phalaenopsis_amboinensis.jpg	Blogger1	NULL	BLOGGER3
+Sobralia altissima	Sobralia.jpg	                NULL	NULL	BLOGGER3
