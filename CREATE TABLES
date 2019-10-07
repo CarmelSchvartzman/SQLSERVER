@@ -1,0 +1,77 @@
+Create Table tblContinents
+(
+ Id int identity primary key,
+ Name nvarchar(50)
+)
+Go
+
+Insert into tblContinents values ('Asia')
+Insert into tblContinents values ('Europe')
+Insert into tblContinents values ('South America')
+Go
+
+Create Table tblCountries
+(
+ Id int identity primary key,
+ Name nvarchar(50),
+ ContinentId int foreign key references dbo.tblContinents(Id)
+)
+Go
+
+Insert into tblCountries values ('India', 1)
+Insert into tblCountries values ('Japan', 1)
+Insert into tblCountries values ('Malaysia', 1)
+
+Insert into tblCountries values ('United Kingdom', 2)
+Insert into tblCountries values ('France', 2)
+Insert into tblCountries values ('Germany', 2)
+
+Insert into tblCountries values ('Argentina', 3)
+Insert into tblCountries values ('Brazil', 3)
+Insert into tblCountries values ('Colombia', 3)
+Go
+
+Create Table tblCities
+(
+ Id int identity primary key,
+ Name nvarchar(50),
+ CountryId int foreign key references dbo.tblCountries(Id)
+)
+Go
+
+Insert into tblCities values ('Bangalore', 1)
+Insert into tblCities values ('Chennai', 1)
+Insert into tblCities values ('Mumbai', 1)
+
+Insert into tblCities values ('Tokyo', 2)
+Insert into tblCities values ('Hiroshima', 2)
+Insert into tblCities values ('Saku', 2)
+
+Insert into tblCities values ('Kuala Lumpur', 3)
+Insert into tblCities values ('Ipoh', 3)
+Insert into tblCities values ('Tawau', 3)
+
+Insert into tblCities values ('London', 4)
+Insert into tblCities values ('Manchester', 4)
+Insert into tblCities values ('Birmingham', 4)
+
+Insert into tblCities values ('Paris', 5)
+Insert into tblCities values ('Cannes', 5)
+Insert into tblCities values ('Nice', 5)
+
+Insert into tblCities values ('Frankfurt', 6)
+Insert into tblCities values ('Eutin', 6)
+Insert into tblCities values ('Alsfeld', 6)
+
+Insert into tblCities values ('Rosario', 7)
+Insert into tblCities values ('Salta', 7)
+Insert into tblCities values ('Corrientes', 7)
+
+Insert into tblCities values ('Rio de Janeiro', 8)
+Insert into tblCities values ('Salvador', 8)
+Insert into tblCities values ('Brasília', 8)
+
+Insert into tblCities values ('Cali', 9)
+Insert into tblCities values ('Montería', 9)
+Insert into tblCities values ('Bello', 9)
+Go
