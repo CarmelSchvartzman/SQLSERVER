@@ -1,0 +1,15 @@
+select top 10    (
+STUFF(
+(
+	Select  '-' + 	CAST(ISNULL(tbl1.TypeID,0) AS VARCHAR)				
+	From tbl0(nolock) AUX left join tbl1 (nolock) On tbl1.ID = AUX.ID	 
+	WHERE AUX.IdNum = TBL.IdNum  
+	ORDER BY tbl1.TypeID ASC
+	FOR XML PATH ('')
+),1,1,'')
+)
+from tbl0 TBL
+
+
+RES:
+
