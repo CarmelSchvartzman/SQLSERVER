@@ -1,4 +1,4 @@
-select top 10    (
+select top 10   TBL.ID [ID],   (
 STUFF(
 (
 	Select  '-' + 	CAST(ISNULL(tbl1.TypeID,0) AS VARCHAR)				
@@ -9,7 +9,7 @@ STUFF(
 ),1,1,'')
 ) [TYPES]
 from tbl0 TBL
-ORDER BY TenantID DESC
+ORDER BY ID DESC
 
 
 
