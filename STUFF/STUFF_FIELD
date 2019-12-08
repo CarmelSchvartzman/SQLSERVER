@@ -9,6 +9,8 @@ STUFF(
 ),1,1,'')
 ) [TYPES]
 from tbl0 TBL
+ORDER BY TenantID DESC
+
 
 
 RES:
