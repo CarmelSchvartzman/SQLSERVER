@@ -1,0 +1,19 @@
+/****** GET SECOND HIGHEST SALARY  :   ******/
+
+SELECT * FROM
+(
+SELECT ROW_NUMBER() OVER (ORDER BY SALARY DESC) [#], a.[id]
+      , a.[first]
+      , a.[last]
+      , a.[gender]
+      , a.[position]
+      , a.[dept]
+      , a.[salary]
+  FROM   [employee] a
+ ) TBL 
+	WHERE # = 2
+  
+  
+  //////////////////////////////////////////////////////////////////////////////////////////
+  
+  
