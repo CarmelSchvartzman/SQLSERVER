@@ -16,4 +16,45 @@ SELECT ROW_NUMBER() OVER (ORDER BY SALARY DESC) [#], a.[id]
   
   //////////////////////////////////////////////////////////////////////////////////////////
   
-  
+ 
+CREATE TABLE  [dept](
+	[id] [int] IDENTITY(0,1) NOT NULL,
+	[name] [nvarchar](50) NULL,
+ CONSTRAINT [PK_dept] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+CREATE TABLE  [employee](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[first] [nvarchar](50) NULL,
+	[last] [nvarchar](50) NULL,
+	[gender] [nvarchar](50) NULL,
+	[position] [nvarchar](50) NULL,
+	[dept] [int] NULL,
+	[salary] [money] NULL,
+ CONSTRAINT [PK_employee] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE  [employee]  WITH CHECK ADD  CONSTRAINT [FK_employee_dept] FOREIGN KEY([dept])
+REFERENCES [dept] ([id])
+GO
+
+ALTER TABLE  .[employee] CHECK CONSTRAINT [FK_employee_dept]
+GO
+
+ALTER TABLE [employee]  WITH CHECK ADD  CONSTRAINT [CK_employee_gender] CHECK  (([gender]='F' OR [gender]='M'))
+GO
+
+ALTER TABLE [employee] CHECK CONSTRAINT [CK_employee_gender]
+GO
+
+ 
