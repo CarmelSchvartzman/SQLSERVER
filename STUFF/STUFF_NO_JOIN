@@ -1,0 +1,16 @@
+
+SELECT * FROM
+(
+SELECT ROW_NUMBER() OVER (ORDER BY SALARY DESC) [#], a.[id]
+      , a.[first]
+      , a.[last]
+      , a.[gender]
+      , a.[position]
+      , a.[dept]
+      , a.[salary]
+	  ,(STUFF((SELECT ',' + [first]
+         FROM [employee] WHERE LAST LIKE 'GERE' FOR XML PATH ('')),1,1,'')  ) W
+  FROM   [employee] a
+ ) TBL 
+	WHERE # = 2
+
