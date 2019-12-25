@@ -1,3 +1,37 @@
 SET ROWCOUNT 0
 WAITFOR DELAY '00:00:01'
 WAITFOR TIME '10:30:00'
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+  
+select top 10   
+TBL.ID [ID],   
+(
+  STUFF(
+  (
+	Select  ',' + 	CAST(ISNULL(tbl1.TypeID,0) AS VARCHAR)				
+	From tbl0(nolock) AUX left join tbl1 (nolock) On tbl1.ID = AUX.ID	 
+	WHERE AUX.IdNum = TBL.IdNum  
+	ORDER BY tbl1.TypeID ASC
+	FOR XML PATH ('')
+  ),1,1,'')
+) [TYPES]
+from tbl0 TBL
+ORDER BY ID DESC
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+FOR XML RAW ('History'), ELEMENTS  
+
+FOR JSON PATH, WITHOUT_ARRAY_WRAPPER
+
+SELECT JSON_VALUE([JSon],'$.TenantID') [json],* 
+FROM tblHistory
+JOIN tblTenant on tblTenant.TenantID = JSON_VALUE([JSon],'$.TenantID')
+WHERE ISJSON([JSon]) > 0
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
