@@ -1,0 +1,30 @@
+id	first	last	gender	position	dept	salary	manager
+1	Ann	Adelson	F	manager	0	10000.00	NULL
+2	Ben	Bender	M	employee	1	3000.00	1
+3	Guy	Gere	M	employee	1	5000.00	2
+4	Dan	GERE	M	courier	0	4000.00	3
+5	Eva	Ender	F	receptionist	0	3500.00	2
+6	Fanny	Fender	F	helper	1	2500.00	1
+
+
+
+select * from employee
+ Declare @ID int ;
+Set @ID = 3;
+
+;WITH CTE AS
+(
+SELECT ID,FIRST,POSITION, MANAGER FROM employee WHERE ID=@ID  
+UNION ALL
+SELECT E.ID,E.FIRST,E.POSITION,  E.MANAGER FROM employee E JOIN CTE ON CTE.manager = E.ID 
+)
+
+SELECT  CTE.ID,CTE.FIRST, ISNULL( T.FIRST,'NO MANAGER') [MANAGER]  
+FROM CTE LEFT OUTER JOIN employee T ON T.ID = CTE.MANAGER
+
+
+//// RESULTS :
+ID	FIRST	MANAGER
+3	Guy	Ben
+2	Ben	Ann
+1	Ann	NO MANAGER
