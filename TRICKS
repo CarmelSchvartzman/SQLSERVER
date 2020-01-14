@@ -52,3 +52,23 @@ SELECT ROW_NUMBER() OVER (ORDER BY SALARY DESC) [#], a.[id]
  ) TBL 
 	WHERE # = 2
 
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+--PRINT @@TRANCOUNT
+BEGIN TRAN T1 BEGIN TRY
+
+
+ 
+
+
+
+		--PRINT @@TRANCOUNT
+		COMMIT TRAN T1
+END TRY BEGIN CATCH
+        PRINT 'TRANS ON CATCH = ' + @@TRANCOUNT + ' ' + @@ERROR
+		ROLLBACK TRAN T1
+END CATCH
+
+		--PRINT 'AFTER TRY'
+		--PRINT @@TRANCOUNT
+
