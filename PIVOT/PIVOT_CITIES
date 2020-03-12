@@ -1,3 +1,5 @@
+//  https://csharp-video-tutorials.blogspot.com/2014/06/part-6-transform-rows-into-columns-in.html
+
 Create Table Countries
 (
  Country nvarchar(50),
