@@ -1,0 +1,18 @@
+
+Update Details Set
+	FirstName = @sFirstName,
+	LastName = @sLastName,
+	BirthYear = @iBirthYear,
+	ErrorCode = @iErrorCode,
+	ErrorDesc = @sErrorDesc,
+	UpdateDate = GetDate()
+Where
+	 Details.IdNum = @nIdNum
+		
+If @@RowCount = 0                                      ---    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+Begin
+	Insert Into Details(IdNum, FirstName, LastName, BirthYear, ErrorCode, 
+			ErrorDesc, UpdateDate)
+		Values(@nIdNum, @sFirstName, @sLastName, @iBirthYear, @iErrorCode, 
+			@sErrorDesc, GetDate())
+End
