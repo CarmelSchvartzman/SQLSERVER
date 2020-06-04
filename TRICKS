@@ -36,6 +36,13 @@ WHERE ISJSON([JSon]) > 0
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
+SELECT ...
+   ORDER BY [CreateDate] DESC
+   OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY
+    SELECT @@ROWCOUNT
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 SELECT * FROM
 (
