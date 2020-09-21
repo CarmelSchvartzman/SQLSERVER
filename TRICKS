@@ -3,6 +3,9 @@ WAITFOR DELAY '00:00:01'
 WAITFOR TIME '10:30:00'
 
 
+
+DECLARE @T TABLE(X NVARCHAR(2)) INSERT @T(X) VALUES ('WW'),('XX') SELECT * FROM @T
+
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
   
