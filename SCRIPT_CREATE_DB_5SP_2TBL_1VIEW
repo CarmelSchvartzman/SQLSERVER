@@ -1,0 +1,192 @@
+  
+/****** Object:  Table [dbo].[anMaterial]    Script Date: 12/05/2020 16:57:53 ******/  
+SET ANSI_NULLS ON  
+GO  
+SET QUOTED_IDENTIFIER ON  
+GO  
+CREATE TABLE [dbo].[anMaterial](  
+    [idMaterial] [int] IDENTITY(1,1) NOT NULL,  
+    [Code] [varchar](50) NULL,  
+    [Material] [varchar](255) NULL,  
+    [Cost] [decimal](12, 2) NULL,  
+    [idMaterialType] [int] NULL,  
+ CONSTRAINT [PK_anMaterial] PRIMARY KEY CLUSTERED   
+(  
+    [idMaterial] ASC  
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]  
+) ON [PRIMARY]  
+GO  
+/****** Object:  Table [dbo].[mdMaterialType]    Script Date: 12/05/2020 16:57:53 ******/  
+SET ANSI_NULLS ON  
+GO  
+SET QUOTED_IDENTIFIER ON  
+GO  
+CREATE TABLE [dbo].[mdMaterialType](  
+    [idMaterialType] [int] NOT NULL,  
+    [Code] [varchar](50) NULL,  
+    [MaterialType] [varchar](255) NULL,  
+ CONSTRAINT [PK_mdMaterialType] PRIMARY KEY CLUSTERED   
+(  
+    [idMaterialType] ASC  
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]  
+) ON [PRIMARY]  
+GO  
+/****** Object:  View [dbo].[vw_anMaterial]    Script Date: 12/05/2020 16:57:53 ******/  
+SET ANSI_NULLS ON  
+GO  
+SET QUOTED_IDENTIFIER ON  
+GO  
+  
+  
+CREATE VIEW [dbo].[vw_anMaterial]  
+AS  
+  
+SELECT m.idMaterial,  
+       m.Code,  
+       m.Material,  
+       m.Cost,  
+       m.idMaterialType,  
+       MaterialTypeCode = t.Code,  
+       t.MaterialType  
+FROM anMaterial m LEFT JOIN mdMaterialType t ON t.idMaterialType = m.idMaterialType  
+GO  
+SET IDENTITY_INSERT [dbo].[anMaterial] ON   
+GO  
+INSERT [dbo].[anMaterial] ([idMaterial], [Code], [Material], [Cost], [idMaterialType]) VALUES (1, N'MAT001', N'Cement', CAST(1000.00 AS Decimal(12, 2)), 1)  
+GO  
+INSERT [dbo].[anMaterial] ([idMaterial], [Code], [Material], [Cost], [idMaterialType]) VALUES (2, N'MAT002', N'Raw Meal', CAST(500.00 AS Decimal(12, 2)), 3)  
+GO  
+INSERT [dbo].[anMaterial] ([idMaterial], [Code], [Material], [Cost], [idMaterialType]) VALUES (3, N'MAT003', N'Clinker', CAST(750.00 AS Decimal(12, 2)), 2)  
+GO  
+INSERT [dbo].[anMaterial] ([idMaterial], [Code], [Material], [Cost], [idMaterialType]) VALUES (4, N'MAT004', N'Liquid Additive', CAST(50.00 AS Decimal(12, 2)), 3)  
+GO  
+INSERT [dbo].[anMaterial] ([idMaterial], [Code], [Material], [Cost], [idMaterialType]) VALUES (5, N'MAT005', N'Intermediate Binder', CAST(350.00 AS Decimal(12, 2)), 2)  
+GO  
+INSERT [dbo].[anMaterial] ([idMaterial], [Code], [Material], [Cost], [idMaterialType]) VALUES (6, N'MAT005', N'Clay', CAST(200.00 AS Decimal(12, 2)), 3)  
+GO  
+INSERT [dbo].[anMaterial] ([idMaterial], [Code], [Material], [Cost], [idMaterialType]) VALUES (7, N'MAT007', N'C4', CAST(100.00 AS Decimal(12, 2)), 3)  
+GO  
+SET IDENTITY_INSERT [dbo].[anMaterial] OFF  
+GO  
+INSERT [dbo].[mdMaterialType] ([idMaterialType], [Code], [MaterialType]) VALUES (1, N'FIN_PRO', N'Finish Product')  
+GO  
+INSERT [dbo].[mdMaterialType] ([idMaterialType], [Code], [MaterialType]) VALUES (2, N'INT_PRO', N'Intermediate Product')  
+GO  
+INSERT [dbo].[mdMaterialType] ([idMaterialType], [Code], [MaterialType]) VALUES (3, N'RAW_MAT', N'Raw Material')  
+GO  
+/****** Object:  StoredProcedure [dbo].[Material_GetByCode]    Script Date: 12/05/2020 16:57:53 ******/  
+SET ANSI_NULLS ON  
+GO  
+SET QUOTED_IDENTIFIER ON  
+GO  
+  
+  
+CREATE PROC [dbo].[Material_GetByCode](  
+    @Code VARCHAR(50)  
+)  
+AS  
+  
+SELECT m.idMaterial,  
+       m.Code,  
+       m.Material,  
+       m.Cost,  
+       m.idMaterialType,  
+       m.MaterialTypeCode,  
+       m.MaterialType  
+FROM vw_anMaterial m WHERE m.Code = @Code  
+GO  
+/****** Object:  StoredProcedure [dbo].[Material_GetById]    Script Date: 12/05/2020 16:57:53 ******/  
+SET ANSI_NULLS ON  
+GO  
+SET QUOTED_IDENTIFIER ON  
+GO  
+  
+  
+CREATE PROC [dbo].[Material_GetById](  
+    @idMaterial INT  
+)  
+AS  
+  
+SELECT m.idMaterial,  
+       m.Code,  
+       m.Material,  
+       m.Cost,  
+       m.idMaterialType,  
+       m.MaterialTypeCode,  
+       m.MaterialType  
+FROM vw_anMaterial m WHERE m.idMaterial = @idMaterial  
+GO  
+/****** Object:  StoredProcedure [dbo].[Material_NEW]    Script Date: 12/05/2020 16:57:53 ******/  
+SET ANSI_NULLS ON  
+GO  
+SET QUOTED_IDENTIFIER ON  
+GO  
+  
+CREATE PROC [dbo].[Material_NEW]  
+(  
+    @Code VARCHAR(50),  
+    @Material VARCHAR(255),  
+    @Cost DECIMAL(12,2) NULL,  
+    @idMaterialType INT,  
+    @idMaterial INT OUT  
+)  
+AS  
+  
+INSERT INTO anMaterial  
+(  
+    Code,  
+    Material,  
+    Cost,  
+    idMaterialType  
+)  
+VALUES ( @Code, @Material, @Cost, @idMaterialType )  
+  
+SET @idMaterial = @@IDENTITY  
+GO  
+/****** Object:  StoredProcedure [dbo].[Material_SEARCH]    Script Date: 12/05/2020 16:57:53 ******/  
+SET ANSI_NULLS ON  
+GO  
+SET QUOTED_IDENTIFIER ON  
+GO  
+  
+CREATE PROC [dbo].[Material_SEARCH]  
+(  
+    @Code VARCHAR(50) NULL,  
+    @Material VARCHAR(255) NULL,  
+    @idMaterialType INT NULL  
+)  
+AS  
+  
+SELECT m.idMaterial,  
+       m.Code,  
+       m.Material,  
+       m.Cost,  
+       m.idMaterialType,  
+       m.MaterialTypeCode,  
+       m.MaterialType  
+FROM vw_anMaterial m    
+WHERE m.Code = ISNULL(@Code,m.Code)  
+AND m.Material LIKE '%' + ISNULL(@Material,m.Material) + '%'  
+AND m.idMaterialType = ISNULL(@idMaterialType, m.idMaterialType)  
+GO  
+/****** Object:  StoredProcedure [dbo].[Material_UPD]    Script Date: 12/05/2020 16:57:53 ******/  
+SET ANSI_NULLS ON  
+GO  
+SET QUOTED_IDENTIFIER ON  
+GO  
+  
+CREATE PROC [dbo].[Material_UPD]  
+(  
+    @idMaterial INT,  
+    @Material VARCHAR(255),  
+    @Cost DECIMAL(12,2) NULL,  
+    @idMaterialType INT NULL  
+)  
+AS  
+  
+UPDATE anMaterial  
+    SET Material = @Material,  
+        Cost = @Cost,  
+        idMaterialType = @idMaterialType  
+WHERE idMaterial = @idMaterial  
+GO 
