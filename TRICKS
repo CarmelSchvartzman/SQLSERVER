@@ -4,7 +4,8 @@ WAITFOR TIME '10:30:00'
 
 
 
-DECLARE @T TABLE(X NVARCHAR(2)) INSERT @T(X) VALUES ('WW'),('XX') SELECT * FROM @T
+ 
+DECLARE @T TABLE(X SQL_VARIANT) INSERT @T VALUES ('1'),(2),(2.5),(1),(null) SELECT * FROM @T T    <<<<<<<<<<<<<<<<<<
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
